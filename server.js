@@ -52,19 +52,30 @@ app.get('/api/todos/search', function search(req, res) {
 
 app.get('/api/todos', function index(req, res) {
   /* This endpoint responds with all of the todos*/
-  res.send({todos : todos});
+  res.json({todos : todos});
 });
 
 app.post('/api/todos', function create(req, res) {
-  /* This endpoint will add a todo to our "database"
-   * and respond with the newly created todo.
-   */
+  var newTodo = req.body;
+  console.log(newTodo);
+    
+  if(todos.length > 0){
+    newTodo._id = todos[todos.length - 1]._id + 1;
+  } else {newTodo._id = 1;}
+  todos.push(newTodo);
+  res.json(newTodo);
 });
+
+
 
 app.get('/api/todos/:id', function show(req, res) {
   /* This endpoint will return a single todo with the * id specified in the route parameter (:id)*/
+  var todoId = parseInt(req.params.id);
   for(var i = 0; i < todos.length; i++){
-      // res.send({todos._id : todos._id});
+
+    if(todos[i]._id === todoId){
+      res.send(todos[i]);
+    }
 
   }
 
