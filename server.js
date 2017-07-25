@@ -99,8 +99,8 @@ app.delete('/api/todos/:id', function destroy(req, res) {
   var todoId = parseInt(req.params.id);
   for(var i = 0; i < todos.length; i++){
     if(todos[i]._id === todoId){
-      todos.splice(todoId-1, 1);
       res.json(todos[i]);
+      todos.splice(i, 1);
     }
   }
 });
@@ -113,3 +113,5 @@ app.delete('/api/todos/:id', function destroy(req, res) {
 app.listen(3000, function() {
   console.log('Server running on http://localhost:3000');
 });
+
+
